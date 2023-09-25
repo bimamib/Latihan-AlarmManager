@@ -75,11 +75,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
             }
 
             R.id.btn_repeating_time -> {
-
+                val timePickerFragmentRepeat = TimePickerFragment()
+                timePickerFragmentRepeat.show(supportFragmentManager, TIME_PICKER_REPEAT_TAG)
             }
 
             R.id.btn_set_repeating_alarm -> {
-
+                val repeatTime = binding?.tvRepeatingTime?.text.toString()
+                val repeatMessage = binding?.edtRepeatingMessage?.text.toString()
+                alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
+                    repeatTime, repeatMessage)
             }
         }
     }
