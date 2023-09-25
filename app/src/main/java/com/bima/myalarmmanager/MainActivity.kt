@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
         binding?.btnOnceTime?.setOnClickListener(this)
         binding?.btnSetOnceAlarm?.setOnClickListener(this)
 
+        binding?.btnRepeatingTime?.setOnClickListener(this)
+        binding?.btnSetRepeatingAlarm?.setOnClickListener(this)
+
         alarmReceiver = AlarmReceiver()
     }
 
@@ -69,6 +72,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
                     onceDate,
                     onceTime,
                     onceMessage)
+            }
+
+            R.id.btn_repeating_time -> {
+
+            }
+
+            R.id.btn_set_repeating_alarm -> {
+
             }
         }
     }
