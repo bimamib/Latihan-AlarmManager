@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
             }
 
             R.id.btn_cancel_repeating_alarm -> {
-
+                alarmReceiver.cancelAlarm(this, AlarmReceiver.TYPE_REPEATING)
             }
         }
     }
