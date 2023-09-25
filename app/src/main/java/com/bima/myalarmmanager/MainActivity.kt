@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
         // Set text dari textview berdasarkan tag
         when (tag) {
             TIME_PICKER_ONCE_TAG -> binding?.tvOnceTime?.text = dateFormat.format(calendar.time)
-            TIME_PICKER_REPEAT_TAG -> {}
+            TIME_PICKER_REPEAT_TAG -> binding?.tvRepeatingTime?.text = dateFormat.format(calendar.time)
             else -> {
             }
         }
