@@ -1,30 +1,42 @@
 package com.bima.myalarmmanager
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bima.myalarmmanager.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.time.Year
 import java.util.Calendar
 import java.util.Locale
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragment.DialogDateListener, TimePickerFragment.DialogTimeListener {
 
     private var binding: ActivityMainBinding? = null
     private lateinit var alarmReceiver: AlarmReceiver
 
-    companion object {
-        private const val DATE_PICKER_TAG = "DatePicker"
-        private const val TIME_PICKER_ONCE_TAG = "TimePickerOnce"
-        private const val TIME_PICKER_REPEAT_TAG = "TimePickerRepeat"
-    }
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        if (Build.VERSION.SDK_INT >= 33) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
 
         // Listener one time alarm
         binding?.btnOnceDate?.setOnClickListener(this)
@@ -94,5 +106,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onDestroy()
 
         binding = null
+    }
+
+    companion object {
+        private const val DATE_PICKER_TAG = "DatePicker"
+        private const val TIME_PICKER_ONCE_TAG = "TimePickerOnce"
+        private const val TIME_PICKER_REPEAT_TAG = "TimePickerRepeat"
     }
 }
